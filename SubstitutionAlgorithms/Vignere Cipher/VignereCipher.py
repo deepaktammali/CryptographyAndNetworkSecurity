@@ -48,7 +48,4 @@ print(cipher_text_number_equivalent)
 print("Plain-Text" + ": {}".format(plain_text))
 print("Encrypted-Text" + ": {}".format(cipher_text))
 
-        
-
-print
 
