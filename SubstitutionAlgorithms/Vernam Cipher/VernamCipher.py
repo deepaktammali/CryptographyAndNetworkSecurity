@@ -33,7 +33,7 @@ cipher_text = ""
 
 for i in range(0,len(plain_text)):
         cipher_text_binary_equivalent.append((plain_text_number_equivalent[i])^(key_number_equivalent[i%m_max]))
-        cipher_text_number_equivalent_in_alphabet_range.append((int(plain_text_number_equivalent[i])^int(key_number_equivalent[i%m_max])%26))
+        cipher_text_number_equivalent_in_alphabet_range.append(((int(plain_text_number_equivalent[i])^int(key_number_equivalent[i%m_max]))%26))
         cipher_text = cipher_text + characters[cipher_text_number_equivalent_in_alphabet_range[i]]  
 
 
