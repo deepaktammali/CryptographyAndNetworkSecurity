@@ -1,9 +1,19 @@
-
 import string
 import numpy as np
 import collections 
 
 characters = list(string.ascii_lowercase)
+
+
+
+
+def numberstotext(data):
+
+    textequivalent = ""
+    for element in data:
+        textequivalent = textequivalent+characters[element]
+    return textequivalent
+
 
 
 
@@ -35,7 +45,7 @@ def matrix(key,plain):
         numberszeroto25.remove(9)
         numberszeroto25.remove(8)
     else :
-        if('9' in plain):
+        if('j' in plain):
             numberszeroto25.remove(8)
         else:
             numberszeroto25.remove(9)
@@ -74,6 +84,40 @@ def keyredundancycheck(data):
     data.reverse()               
     print(data)
     return data
+
+
+def encryptingplaintext(matrix,texttotbeencrypted):
+    data = []
+    for i in range(0,len(texttotbeencrypted)-1):
+        text1 = texttotbeencrypted[i]
+        text2 = texttotbeencrypted[i+1]
+        row1,column1 = np.where(matrix == text1)
+        #print(np.where(matrix == text1))
+        row2,column2 = np.where(matrix == text2)
+        #print(np.where(matrix == text2))
+        try:
+            if(row1==row2):
+                print(row1[0],column1[0]+1,row2[0],column2[0]+1)
+                data.append(matrix[row1[0],column1[0]+1])
+                data.append(matrix[row2[0],column2[0]+1])
+                continue
+            if(column1 == column2):
+                data.append(matrix[row1[0]+1,column1[0]])
+                data.append(matrix[row2[0]+1,column2[0]])
+                continue
+            else:
+                data.append(matrix[row1[0],column2[0]])
+                data.append(matrix[row2[0],column1[0]])
+                continue
+        except Exception as e:
+            pass
+        i=i+1
+
+    for j in range(0,len(data)):
+        data[j] = int(data[j])
+        
+    return data
+        
                 
         
     
@@ -89,6 +133,7 @@ if(len(plain_text)%2==1):
 
 plain_text_modified = redundancyCheck(plain_text)
 
+plain_text_number_equivalent = texttonumbers(plain_text_modified)
 
 key = input("Enter the key:").replace(" ","").lower()
 
@@ -99,8 +144,15 @@ key_number_equivalent_modified = keyredundancycheck(key_number_equivalent)      
 
 cipher_matrix = matrix(key_number_equivalent_modified,plain_text_modified)
 
+cipher_text_number_equivalent = encryptingplaintext(cipher_matrix,plain_text_number_equivalent)
 
 
+#print(plain_text_number_equivalent)
+#print(cipher_text_number_equivalent)
+
+
+print("Plain-Text : {}".format(plain_text))
+print("EncryptedText : {}".format(numberstotext(cipher_text_number_equivalent)))
 
 
 
