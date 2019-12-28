@@ -89,29 +89,35 @@ def keyredundancycheck(data):
 def encryptingplaintext(matrix,texttotbeencrypted):
     data = []
     for i in range(0,len(texttotbeencrypted)-1):
-        text1 = texttotbeencrypted[i]
-        text2 = texttotbeencrypted[i+1]
-        row1,column1 = np.where(matrix == text1)
-        #print(np.where(matrix == text1))
-        row2,column2 = np.where(matrix == text2)
-        #print(np.where(matrix == text2))
-        try:
-            if(row1[0] == row2[0]):
-                print(row1[0],column1[0]+1,row2[0],column2[0]+1)
-                data.append(matrix[row1[0],column1[0]+1])
-                data.append(matrix[row2[0],column2[0]+1])
-                continue
-            if(column1[0] == column2[0]):
-                data.append(matrix[row1[0]+1,column1[0]])
-                data.append(matrix[row2[0]+1,column2[0]])
-                continue
-            else:
-                data.append(matrix[row1[0],column2[0]])
-                data.append(matrix[row2[0],column1[0]])
-                continue
-        except Exception as e:
-            pass
-        i=i+1
+        if(i%2==0):
+            text1 = texttotbeencrypted[i]
+            text2 = texttotbeencrypted[i+1]
+            print(text1,text2)
+            row1,column1 = np.where(matrix == text1)
+            print(np.where(matrix == text1))
+            row2,column2 = np.where(matrix == text2)
+            print(np.where(matrix == text2))
+            row1[row1==4]=0
+            row2[row2==4]=0
+            column1[column1==4]=0
+            column2[column2==4]=0
+            try:
+                if(row1[0] == row2[0]):
+                    data.append(matrix[row1[0],column1[0]+1])
+                    data.append(matrix[row2[0],column2[0]+1])
+                    continue
+                if(column1[0] == column2[0]):
+                    print(row1[0],row2[0])
+                    print(column1[0],column2[0])
+                    data.append(matrix[row1[0]+1,column1[0]])
+                    data.append(matrix[row2[0]+1,column2[0]])
+                    continue
+                else:
+                    data.append(matrix[row1[0],column2[0]])
+                    data.append(matrix[row2[0],column1[0]])
+                    continue
+            except Exception as e:
+                print(e)
 
     for j in range(0,len(data)):
         data[j] = int(data[j])
@@ -144,6 +150,7 @@ key_number_equivalent_modified = keyredundancycheck(key_number_equivalent)      
 
 
 cipher_matrix = matrix(key_number_equivalent_modified,plain_text_modified)
+print(plain_text_number_equivalent)
 
 cipher_text_number_equivalent = encryptingplaintext(cipher_matrix,plain_text_number_equivalent)
 
