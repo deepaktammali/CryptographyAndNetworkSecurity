@@ -96,12 +96,12 @@ def encryptingplaintext(matrix,texttotbeencrypted):
         row2,column2 = np.where(matrix == text2)
         #print(np.where(matrix == text2))
         try:
-            if(row1==row2):
+            if(row1[0] == row2[0]):
                 print(row1[0],column1[0]+1,row2[0],column2[0]+1)
                 data.append(matrix[row1[0],column1[0]+1])
                 data.append(matrix[row2[0],column2[0]+1])
                 continue
-            if(column1 == column2):
+            if(column1[0] == column2[0]):
                 data.append(matrix[row1[0]+1,column1[0]])
                 data.append(matrix[row2[0]+1,column2[0]])
                 continue
@@ -134,6 +134,7 @@ if(len(plain_text)%2==1):
 plain_text_modified = redundancyCheck(plain_text)
 
 plain_text_number_equivalent = texttonumbers(plain_text_modified)
+print(plain_text_number_equivalent)
 
 key = input("Enter the key:").replace(" ","").lower()
 
